@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  bbc:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: babycare
+    restart: unless-stopped
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:35009 app.py --no-reload --no-debugger"]
+    ports:
+      - 0.0.0.0:6604:8000
+      - 35009:35009 # for DEBUG
+    volumes:
+      - .:/code
